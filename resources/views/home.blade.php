@@ -1,28 +1,34 @@
 @extends('layouts.master')
 
+@push('head-scripts')
+<style>
+.mb-3{ margin-bottom: 5%;}
+</style>
+    
+@endpush
+
+
 @section('content')
 <div id="page-wrapper">
     <div class="header">
         <h1 class="page-header">
-            Dashboard <small>Summary of your App</small>
+            Dashboard <small> {{auth()->user()->name}} </small>
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active">Data</li>
-        </ol>
 
     </div>
     <div id="page-inner">
-
+            <div class="mb-3">
+    <a class="btn btn-info pull-right" href="/user" >Create Customer</a></div>
         <div class="row">
             <div class="col-md-12">
+               
                 <!-- Advanced Tables -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                          Advanced Tables
                     </div>
                     <div class="panel-body">
+                           
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
 <thead>
@@ -56,9 +62,11 @@
     
     
     </td>
-    <td>Create User</td>
+    <td class="text-center"><span style="font-size:2em" class="fa fa-eye"><span></td>
 </tr>
-@endforeach
+@endforeach   
+@else
+ <tr> <td colspan="5">No Customers Found</td> </tr>   
 @endif
 
                             </table>
@@ -98,12 +106,12 @@
 
 
 
-
+{{-- 
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif
+                    @endif --}}
 
              
 @endsection

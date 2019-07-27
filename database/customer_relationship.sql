@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2019 at 07:25 PM
+-- Generation Time: Jul 27, 2019 at 11:11 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -33,7 +33,7 @@ CREATE TABLE `customers` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -44,8 +44,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'new customer', 'cust@g.com', '4354475786', 'vvhjjjbnmbb', 0, '2019-07-27 16:33:59', NULL),
-(2, 'custmz', 'cst@g.com', '34658798', 'dfhjgkjhkvc', 1, '2019-07-27 16:34:26', NULL);
+(7, 'cus', 'cu@g.c', '2323123131', 'xczxcxxxxxx', 1, '2019-07-27 15:33:40', '2019-07-27 15:33:40'),
+(8, 'cus', 'cuz@g.c', '2323123131', 'xczxcxxxxxx', 0, '2019-07-27 15:36:50', '2019-07-27 15:36:50');
 
 -- --------------------------------------------------------
 
@@ -56,9 +56,9 @@ INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `status`, `c
 CREATE TABLE `customer_user` (
   `customer_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `activity_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reaction` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reaction` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -68,8 +68,8 @@ CREATE TABLE `customer_user` (
 --
 
 INSERT INTO `customer_user` (`customer_id`, `user_id`, `activity_type`, `description`, `reaction`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email', 'welcome', '', '2019-07-27 17:03:56', NULL),
-(1, 2, 'mob', 'welc', '', '2019-07-27 16:40:45', NULL);
+(7, 1, 'mail', 'ccccccccccccccccc', NULL, '2019-07-27 15:33:40', '2019-07-27 15:33:40'),
+(8, 1, 'mail', 'ccccccccccccccccc', NULL, '2019-07-27 15:36:50', '2019-07-27 15:36:50');
 
 -- --------------------------------------------------------
 
@@ -128,31 +128,31 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Mr. Tad Kerluke Sr.', '+1 (708) 810-1664', 'ohara.isaias@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'JZ97stLuJMxfvL4q4zfKZPNOrfX5w1fPtVpcSWk8uxcLiIKP9lEwkRZxvqsM', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(2, 'Demetrius Rau II', '895-660-9490 x37656', 'terry.marc@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'dfqHOIA2Ga', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(3, 'Randi Koepp PhD', '562-206-0750 x8220', 'dewitt40@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'OvLChjjw4O', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(4, 'Zachariah Roberts III', '+1-719-321-7680', 'neoma73@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Nlm5jL7se2', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(5, 'Gerardo Jenkins', '274-904-5889 x4270', 'conor.nolan@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'pjt1qwEZMv', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(6, 'Baby Wintheiser IV', '897.580.1882', 'estel40@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '7dBE2Px14x', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(7, 'Carol Greenholt', '(709) 407-4750', 'lesly64@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'NZ8kOpBVYo', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(8, 'Brendan Kuhic', '702.494.9039', 'keven.zboncak@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'kPPGR3jMhY', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(9, 'Prof. Gavin Boehm', '576-765-0959', 'pbayer@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'nrcJgdTxkK', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(10, 'Mr. Jaleel Schamberger MD', '+1-787-697-0414', 'lowe.rosie@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '7hKRatUsVW', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(11, 'Tremaine Glover', '227.836.9362', 'strosin.murl@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'b35dYhUpux', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(12, 'Cole Pouros', '+1 (856) 799-4993', 'qwalker@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'en5qV7StB0', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(13, 'Marilyne Hermann', '448-761-3254 x2457', 'robert91@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '1rS9Geimam', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(14, 'Prof. Glen Gaylord', '319.756.7995 x16161', 'wswaniawski@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'CmTjeVD0Z8', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(15, 'Miss Jazmin Rippin', '(338) 450-3901 x33459', 'madisen39@example.net', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'yJjL22jd53', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(16, 'Alfred Rolfson V', '861.452.5500', 'wunsch.mazie@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '87kwFqpJnw', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(17, 'Mrs. Patsy Medhurst', '767-728-0584 x0350', 'rmcclure@example.net', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'wqNg9zpxwM', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(18, 'Lenny Carter', '676-457-0171 x76049', 'bart65@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'X2L7h8tVp1', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(19, 'Marilie Wilkinson', '1-263-941-6500 x0881', 'ullrich.tyrell@example.org', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'INrOalo2QI', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(20, 'Dr. Erik Runolfsdottir Jr.', '1-697-420-5723 x078', 'wisoky.tyrique@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Uxh5I54YQn', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(21, 'Rubye Walker', '851-404-0394 x6730', 'lpurdy@example.net', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '8Duhfl9HMf', '2019-07-27 10:34:44', '2019-07-27 10:34:44'),
-(22, 'Prof. Nelda Walker PhD', '(470) 627-6626', 'schultz.tessie@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'tyE6oM8QvP', '2019-07-27 10:34:45', '2019-07-27 10:34:45'),
-(23, 'Lilliana Skiles', '+1 (552) 721-1304', 'barrows.dangelo@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'UCRjITUN2s', '2019-07-27 10:34:45', '2019-07-27 10:34:45'),
-(24, 'Ryley Boehm', '+1-203-915-2465', 'rdach@example.net', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'HTzshFAFGB', '2019-07-27 10:34:45', '2019-07-27 10:34:45'),
-(25, 'Abigayle Ullrich V', '(494) 526-8683 x1800', 'isai.schamberger@example.com', '2019-07-27 10:34:44', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'SePLytfgzc', '2019-07-27 10:34:45', '2019-07-27 10:34:45');
+(1, 'Ali Hettinger DDS', '(534) 236-9882 x0708', 'tierra.ferry@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Np35WwIbEClA2v8xizLwhna1IeA1MwVpuRxxDGwkConmA06zjWSeoZZeFJXh', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(2, 'Angie Morar', '228.855.9230 x087', 'enoch.sanford@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6D5YqbfxG3', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(3, 'Dr. Waylon Marks Sr.', '528-680-9496 x9006', 'heller.charity@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9F0F0xcVA3', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(4, 'Yoshiko Gislason', '+1 (463) 600-0786', 'cdaugherty@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'A1OxzD3iUu', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(5, 'Prof. Stefanie Kozey', '+1 (617) 710-5455', 'eleazar42@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'H4xys6vkOO', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(6, 'Zella Romaguera', '223-225-0404 x739', 'feest.theodore@example.org', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '4Vwl6lgucN', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(7, 'Marquise Cole', '724.794.6576 x5585', 'qvonrueden@example.org', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'LszzXlET5b', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(8, 'Icie Wolf', '925-426-5790 x991', 'uconn@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'anxfVG5wU5', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(9, 'Arely Trantow', '249-864-9704 x125', 'okon.keegan@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Ubu4zx4Ez3', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(10, 'Romaine Stroman', '1-307-917-8951', 'runolfsson.jaren@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ayUWT6D7ES', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(11, 'Albin Hand', '763.267.5100', 'toy.alta@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '5B75maULhD', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(12, 'Ethel Bins', '889-992-6007', 'frami.stefanie@example.org', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'zJ1yWqUB4R', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(13, 'Levi Kub', '682-207-3272 x6288', 'klehner@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'tfOO5xRbI7', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(14, 'Ray Pollich', '1-423-624-0400', 'omari.toy@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'JbdS3mH9GV', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(15, 'Martina Hintz', '+17769182692', 'fgrant@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'IVpRW5K4HC', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(16, 'Prof. Brody Bartell', '+1-740-505-8534', 'heber.jerde@example.org', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'xyf37XTidP', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(17, 'Jazmin Hickle', '(249) 606-9716 x1627', 'manuel82@example.org', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'qVAXQ1BPTt', '2019-07-27 15:30:11', '2019-07-27 15:30:11'),
+(18, 'Mrs. Ila Cole Sr.', '295-498-9446 x9420', 'lysanne54@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'z6u73t3jOW', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(19, 'Connor Runolfsson', '538-966-8832 x4144', 'veum.luis@example.net', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '82Rr2oTzFo', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(20, 'Lillie Deckow Sr.', '1-775-920-4048 x7667', 'mackenzie.ward@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '09xFRVT3ZY', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(21, 'Sincere Willms V', '+1.787.513.7494', 'lew31@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'yb0TSlyHTI', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(22, 'Christelle Barrows', '1-498-237-1016', 'rubie98@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'zMuMA8sYRC', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(23, 'Zachariah Walker', '812.796.9879 x1188', 'damien.hoeger@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'EmhXIK1OGM', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(24, 'Mr. Dallas Johnston I', '(827) 257-9857 x559', 'adolphus59@example.org', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ffplQADTuW', '2019-07-27 15:30:12', '2019-07-27 15:30:12'),
+(25, 'Alexander Pagac DDS', '(356) 988-9901 x9103', 'nferry@example.com', '2019-07-27 15:30:11', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'rNl40BGacM', '2019-07-27 15:30:12', '2019-07-27 15:30:12');
 
 --
 -- Indexes for dumped tables
@@ -192,7 +192,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `migrations`

@@ -16,9 +16,9 @@ class CustomerUser extends Migration
         Schema::create('customer_user', function (Blueprint $table) {
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->string('activity_type');
-            $table->text('description');
-            $table->string('reaction');
+            $table->string('activity_type')->nullable();
+            $table->text('description')->nullable();
+            $table->string('reaction')->nullable();
             $table->timestamps();
         });
     }

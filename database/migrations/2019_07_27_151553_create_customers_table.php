@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->string('address');
+            $table->text('address');
             $table->boolean('status')->default(false)->nullable();
             $table->timestamps();
         });
