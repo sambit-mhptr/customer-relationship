@@ -12,7 +12,7 @@ class User extends Authenticatable
 
    public function customers(){
        
-       return $this->belongsToMany(Customer::class)->withPivot('activity_type', 'description','reaction')->withTimestamps();
+       return $this->belongsToMany(Customer::class)->withPivot('id','activity_type', 'description','reaction')->withTimestamps();
     }
     /**
      * The attributes that are mass assignable.

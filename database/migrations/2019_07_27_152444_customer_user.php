@@ -14,12 +14,14 @@ class CustomerUser extends Migration
     public function up()
     {
         Schema::create('customer_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->string('activity_type')->nullable();
             $table->text('description')->nullable();
             $table->string('reaction')->nullable();
             $table->timestamps();
+            $table->foreign('customer_id')->on('customers')->references('id')->onDelete('cascade');
         });
     }
 

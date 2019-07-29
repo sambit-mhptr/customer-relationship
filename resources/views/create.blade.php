@@ -4,22 +4,17 @@
 <style>
 textarea{ resize: none;}
 .is-invalid{ border: 1px dashed red}
+
+
+
 </style>
     
 @endpush
 
-@push('foot-scripts')
-    
-@endpush
+
 
 @section('content')
-<div id="page-wrapper">
-    <div class="header">
-            <h1 class="page-header">
-                    Dashboard <small> {{auth()->user()->name}} </small>
-                </h1>
 
-    </div>
     <div id="page-inner">
             <div class="row">
                     <div class="col-lg-12">
@@ -28,6 +23,19 @@ textarea{ resize: none;}
                                 Create Customer
                             </div>
                             <div class="panel-body">
+                                <div class="row">
+
+                        <div class="col-lg-5">
+                            @if(count($errors->all()))
+                            @foreach ($errors->all() as $e)
+                            <p class="alert alert-danger">{{ $e }}</p>
+                                
+                            @endforeach
+                            @endif
+
+                        </div>
+
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-12">
 <form id="unique" method="POST" action="{{ route('user.store') }}">
@@ -89,30 +97,15 @@ textarea{ resize: none;}
         @enderror
        
 </div>
+<hr>
+<h4 class="text-center">Associate Activity</h4>
+<a class="pull-right" onclick="addActivity(event)" href="">Add Activity</a><br/><a onclick="removeActivity(event)" href="" class="pull-right">Remove Activity</a>
+<div id="each-activity">
 
-<div class="form-group">
-        <label>Select Activity Type</label>
-        <select class="form-control @error('activity_type') is-invalid @enderror" name="activity_type">
-            <option value="">Select</option>
-            <option value="mail" {{ (old("activity_type") == 'mail' ? "selected":"") }}>Mail</option>
-            <option value="call" {{ (old("activity_type") == 'call' ? "selected":"") }}>Call</option>
-        </select>
-        @error('activity_type')
-        <span class="text-danger help-text" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
+
+
 </div>
 
-<div class="form-group">
-        <label for="activity_description">Describe Activity</label>
-        <textarea id="activity_description" name="activity_description" class="form-control @error('activity_description') is-invalid @enderror" rows="3">{{ old('activity_description') }}</textarea>
-        @error('activity_description')
-        <span class="text-danger help-text" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-    </div>
 
 <div class="form-group input-group">
 <button onclick="this.form.submit()" class="btn btn-primary" type="submit">Submit</button>    
@@ -129,34 +122,76 @@ textarea{ resize: none;}
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-                <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
-                </div>
-    
-                        
-                    </div>
-                </div>
-                <!--End Advanced Tables -->
-            </div>
-        </div>
-
-
-        <footer>
-            <p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p>
-
-
-        </footer>
-    </div>
-    <!-- /. PAGE INNER  -->
-</div>
-
-
-
-
-                    {{-- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif --}}
+               
 
              
 @endsection
+
+
+
+
+
+
+@push('foot-scripts')
+<script>
+ var invalidTyp;
+ var text;
+ var oldTyp;
+ var oldDesc;
+ var messageTyp;
+
+ var invalidDesc;
+ var textDesc;
+ var oldDesc;
+ var messageDesc ;
+
+@error('activity_type')
+  invalidTyp = 'is-invalid';
+  text = 'text-danger';
+  oldTyp = "{{ old('activity_type') }}";
+  oldDesc = "{{ old('activity_description') }}";
+  messageTyp = "{{ $message }}"
+@enderror
+
+@error('activity_description')
+  invalidDesc = 'is-invalid';
+  textDesc = 'text-danger';
+  oldDesc = "{{ old('activity_description') }}";
+  messageDesc = "{{ $message }}"
+@enderror
+
+
+var counter = 0;
+function addActivity(event)
+{ event.preventDefault();
+  counter++;
+
+    var tag = `<div id="add-${counter}">
+<div class="form-group">
+        <label for="activity_type"> Activity Type</label>
+        <input type="text" id="activity_type" class="form-control " name="activity_type[]" value="" autocomplete="" class="form-control" required>
+        <span class="help-text" role="alert">
+            <strong></strong>
+        </span>
+</div>
+
+<div class="form-group">
+        <label for="activity_description">Describe Activity</label>
+        <textarea id="activity_description" name="activity_description[]" class="form-control" rows="3"></textarea>
+        <span class="help-text" role="alert">
+            <strong></strong>
+        </span>
+</div>
+</div>`;
+
+    jQuery("#each-activity").append(tag);
+    
+} 
+
+function removeActivity(event)
+{ event.preventDefault();
+   jQuery("#add-"+counter).remove();
+    counter--;
+}  
+</script> 
+@endpush

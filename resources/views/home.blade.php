@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+{{-- {{ dd($customers) }} --}}
 @push('head-scripts')
 <style>
 .mb-3{ margin-bottom: 5%;}
@@ -7,20 +7,32 @@
     
 @endpush
 
+@push('foot-scripts')
+
+@if (count($customers))
+<script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+</script>
+@endif
+
+@endpush
 
 @section('content')
-<div id="page-wrapper">
-    <div class="header">
-        <h1 class="page-header">
-            Dashboard <small> {{auth()->user()->name}} </small>
-        </h1>
 
-    </div>
+
+
     <div id="page-inner">
             <div class="mb-3">
-    <a class="btn btn-info pull-right" href="/user" >Create Customer</a></div>
+            <a class="btn btn-info pull-right" href="{{ route('user.create') }}" >Create Customer</a></div>
         <div class="row">
             <div class="col-md-12">
+                    @if (session('status'))
+                    <div class="alert alert-success text-center" role="alert">
+                        {{ session('status') }}
+                    </div>
+                    @endif
                
                 <!-- Advanced Tables -->
                 <div class="panel panel-default">
@@ -43,10 +55,10 @@
 
 @if (count($customers))
     
-
+@php $i=1; @endphp
 @foreach ($customers as $customer)
 <tr class="odd gradeX">
-    <td class="center">{{$customer['id']}}</td>
+    <td class="center">{{$i++}}</td>
     <td>{{$customer['name']}}</td>
     <td>
     <div>
@@ -56,17 +68,23 @@
         Status:  {{ $customer['status']==true?'Paid':'Not Paid' }}<br>
     </div>
     </td>
-    <td>
-        Activity Type :    {{ $customer['pivot']['activity_type'] }}<br>
-        Activity Description: {{ $customer['pivot']['description'] }}
-    
-    
-    </td>
-    <td class="text-center"><span style="font-size:2em" class="fa fa-eye"><span></td>
+    <td> <a href="{{ route('user.show', $customer['id']) }}" style="font-size:1.4em" class="fa fa-eye"> View Activity</a>  </td>
+    <td class="text-center">
+    <form style="display:inline" onclick="if(confirm('would you like to delete')){return this.submit();}else{return false;}" method="POST" action="{{ route('user.delete', $customer['id'] ) }}">
+@csrf
+@method('DELETE')
+
+<span style="font-size:1.4em;cursor:pointer" class="fa fa-trash-o"></span>
+</form>
+  
+<a href="{{ route('user.edit', $customer['id']) }}" style="font-size:1.4em" class="fa fa-edit"></a>
+
+
+</td>
 </tr>
 @endforeach   
 @else
- <tr> <td colspan="5">No Customers Found</td> </tr>   
+ <tr> <td class="text-center text-danger" colspan="5">No Customers Found</td></tr>   
 @endif
 
                             </table>
@@ -95,15 +113,7 @@
         <!-- /. ROW  -->
 
 
-        <footer>
-            <p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p>
-
-
-        </footer>
-    </div>
-    <!-- /. PAGE INNER  -->
-</div>
-
+      
 
 
 {{-- 

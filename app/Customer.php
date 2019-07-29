@@ -11,7 +11,7 @@ class Customer extends Model
     protected $guarded = [] ;
     public function users(){
        
-        $this->belongsToMany(User::class)->withPivot('activity_type', 'description','reaction')->withTimestamps();;
+        $this->belongsToMany(User::class)->withPivot('id','activity_type', 'description','reaction')->withTimestamps();;
     }
     
 }
