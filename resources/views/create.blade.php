@@ -25,7 +25,7 @@ textarea{ resize: none;}
                             <div class="panel-body">
                                 <div class="row">
 
-                        <div class="col-lg-5">
+                      {{--   <div class="col-lg-5">
                             @if(count($errors->all()))
                             @foreach ($errors->all() as $e)
                             <p class="alert alert-danger">{{ $e }}</p>
@@ -33,7 +33,7 @@ textarea{ resize: none;}
                             @endforeach
                             @endif
 
-                        </div>
+                        </div> --}}
 
                                 </div>
                                 <div class="row">
@@ -84,10 +84,10 @@ textarea{ resize: none;}
 <div class="form-group">
         <label>Status</label>
         <label class="radio-inline @error('status') is-invalid @enderror">
-        <input  type="radio" name="status"  value="1">Paid
+        <input  type="radio" name="status" @if(old('status')) checked @endif  value="1">Paid
         </label >
         <label class="radio-inline @error('status') is-invalid @enderror">
-        <input type="radio" name="status" value="0" checked>Not Paid
+        <input type="radio" name="status" @if(!old('status')) checked @endif value="0" checked>Not Paid
         </label>
 
         @error('status')
@@ -100,15 +100,76 @@ textarea{ resize: none;}
 <hr>
 <h4 class="text-center">Associate Activity</h4>
 <a class="pull-right" onclick="addActivity(event)" href="">Add Activity</a><br/><a onclick="removeActivity(event)" href="" class="pull-right">Remove Activity</a>
+
+
+
+
 <div id="each-activity">
+
+        @if( count($errors->get('activity_type.*')) || count($errors->get('activity_description.*')) )
+
+        @php
+         $count =  max([count(session()->getOldInput()['activity_type']) , count(session()->getOldInput()['activity_description'])]);
+        @endphp
+ @for ($i = 0; $i < $count; $i++)
+           
+ <div id="add- {{ $i }}" > 
+         <div class="form-group">
+             <label for="activity_type"> Activity Type</label>
+             <input type="text" id="activity_type"
+                 class="form-control @error('activity_type.'.$i) is-invalid @enderror" name="activity_type[]"
+                 value="{{ old('activity_type.'.$i) ?? "" }}" autocomplete="activity_type[]" class="form-control"
+                >
+             <span class="help-text @error('activity_type.'.$i) text-danger @enderror" role="alert">
+                 <strong>{{$errors->get('activity_type.*')['activity_type.'.$i][0] ?? ""}}</strong>
+             </span>
+         </div>
+         
+         <div class="form-group">
+                 <label for="activity_description">Describe Activity</label>
+                 <textarea id="activity_description" name="activity_description[]" class="form-control @error('activity_description.'.$i) is-invalid @enderror" rows="3">{{ old('activity_description.'.$i) ?? "" }}</textarea>
+                 @error('activity_description.*')
+                 <span class="help-text @error('activity_description.'.$i) text-danger @enderror" role="alert">
+                     <strong>{{$errors->get('activity_description.*')['activity_description.'.$i][0] ?? ""}}</strong>
+                 </span>
+                 @enderror
+ 
+         </div> 
+     </div> 
+  
+ 
+ 
+@endfor
+ 
+ 
+ 
+ 
+
+@endif
+
 
 
 
 </div>
 
+        
+        
+           
+        
 
+
+
+
+
+
+
+
+
+</div>
+
+                            </div>
 <div class="form-group input-group">
-<button onclick="this.form.submit()" class="btn btn-primary" type="submit">Submit</button>    
+<button class="btn btn-primary" type="submit">Submit</button>    
 </div>
  </form>
                                     </div>
@@ -134,42 +195,15 @@ textarea{ resize: none;}
 
 @push('foot-scripts')
 <script>
- var invalidTyp;
- var text;
- var oldTyp;
- var oldDesc;
- var messageTyp;
-
- var invalidDesc;
- var textDesc;
- var oldDesc;
- var messageDesc ;
-
-@error('activity_type')
-  invalidTyp = 'is-invalid';
-  text = 'text-danger';
-  oldTyp = "{{ old('activity_type') }}";
-  oldDesc = "{{ old('activity_description') }}";
-  messageTyp = "{{ $message }}"
-@enderror
-
-@error('activity_description')
-  invalidDesc = 'is-invalid';
-  textDesc = 'text-danger';
-  oldDesc = "{{ old('activity_description') }}";
-  messageDesc = "{{ $message }}"
-@enderror
-
-
+ 
 var counter = 0;
 function addActivity(event)
 { event.preventDefault();
-  counter++;
 
     var tag = `<div id="add-${counter}">
 <div class="form-group">
         <label for="activity_type"> Activity Type</label>
-        <input type="text" id="activity_type" class="form-control " name="activity_type[]" value="" autocomplete="" class="form-control" required>
+        <input type="text" id="activity_type" class="form-control " name="activity_type[]" value="" autocomplete="" class="form-control">
         <span class="help-text" role="alert">
             <strong></strong>
         </span>
@@ -190,8 +224,9 @@ function addActivity(event)
 
 function removeActivity(event)
 { event.preventDefault();
-   jQuery("#add-"+counter).remove();
-    counter--;
+   jQuery("#each-activity > div:last-child").remove();
+   
 }  
+
 </script> 
 @endpush
