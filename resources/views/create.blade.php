@@ -4,9 +4,6 @@
 <style>
 textarea{ resize: none;}
 .is-invalid{ border: 1px dashed red}
-
-
-
 </style>
     
 @endpush
@@ -113,7 +110,7 @@ textarea{ resize: none;}
         @endphp
  @for ($i = 0; $i < $count; $i++)
            
- <div id="add- {{ $i }}" > 
+ <div > 
          <div class="form-group">
              <label for="activity_type"> Activity Type</label>
              <input type="text" id="activity_type"
@@ -135,6 +132,7 @@ textarea{ resize: none;}
                  @enderror
  
          </div> 
+         <span class="help-text" role="alert">Give both activity decription and type. </span>
      </div> 
   
  
@@ -152,23 +150,10 @@ textarea{ resize: none;}
 
 </div>
 
-        
-        
-           
-        
-
-
-
-
-
-
-
-
-
 </div>
 
                             </div>
-<div class="form-group input-group">
+<div class="form-group input-group" style="margin-top:2em">
 <button class="btn btn-primary" type="submit">Submit</button>    
 </div>
  </form>
@@ -195,12 +180,10 @@ textarea{ resize: none;}
 
 @push('foot-scripts')
 <script>
- 
-var counter = 0;
 function addActivity(event)
 { event.preventDefault();
 
-    var tag = `<div id="add-${counter}">
+    var tag = `<div>
 <div class="form-group">
         <label for="activity_type"> Activity Type</label>
         <input type="text" id="activity_type" class="form-control " name="activity_type[]" value="" autocomplete="" class="form-control">
@@ -216,6 +199,7 @@ function addActivity(event)
             <strong></strong>
         </span>
 </div>
+<span class="help-text" role="alert">Give both activity decription and type. </span>
 </div>`;
 
     jQuery("#each-activity").append(tag);
